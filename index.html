@@ -885,6 +885,8 @@ table.diario-table tfoot td{font-weight:700;color:var(--black);border-top:2px so
         <div class="meta-row calc"><label>Entregas no mês (meta)</label><span id="mm-entregasMes">—</span></div>
         <div class="meta-row calc"><label>Meta Diária (R$)</label><span id="mm-metaDiaria">—</span></div>
         <div class="meta-row final"><label>Meta Mensal</label><span id="mm-metaMensal">—</span></div>
+        <div class="meta-row equipe"><label>Meta por Produtivo (Mensal)</label><span id="mm-metaPorProdutivoMensal">—</span></div>
+        <div class="meta-row equipe"><label>Meta por Produtivo (Diária)</label><span id="mm-metaPorProdutivoDiaria">—</span></div>
       </div>
     </div>
   </div>
@@ -1863,6 +1865,8 @@ function renderMetaMensal(){
   document.getElementById('mm-entregasMes').textContent = Math.round(entregasMes*10)/10;
   document.getElementById('mm-metaDiaria').textContent = fmtR2(metaDiaria);
   document.getElementById('mm-metaMensal').textContent = fmtR(metaMensal);
+  document.getElementById('mm-metaPorProdutivoMensal').textContent = p.numProdutivos ? fmtR2(metaMensal/p.numProdutivos) : '—';
+  document.getElementById('mm-metaPorProdutivoDiaria').textContent = p.numProdutivos ? fmtR2(metaDiaria/p.numProdutivos) : '—';
 
   const diaRef = Math.min(Math.max(p.diaRef||1,1), totalDiasMes);
   const diasUteisAteRef = diasUteisAte(metaMensalFiltro, diaRef);
