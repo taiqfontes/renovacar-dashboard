@@ -905,10 +905,6 @@ table.diario-table tfoot td{font-weight:700;color:var(--black);border-top:2px so
 
   <div class="charts-row">
     <div class="card">
-      <div class="card-title">Produtividade da equipe <span class="note" id="indEquipeNote">M.O. ÷ capacidade máxima · linha = desejada</span></div>
-      <div class="chart-box chart-h-lg"><canvas id="chartIndivEquipe"></canvas></div>
-    </div>
-    <div class="card">
       <div class="card-title">Parâmetros de produtividade <span class="note">editáveis · salvos neste navegador</span></div>
       <div class="meta-row"><label>VH médio (R$/hora)</label><span><input type="number" id="ip-vh" min="1" step="1" style="width:90px;text-align:right" oninput="onProdParamInput()"></span></div>
       <div class="meta-row"><label>Horas por dia</label><span><input type="number" id="ip-horas" min="1" max="24" step="0.5" style="width:90px;text-align:right" oninput="onProdParamInput()"></span></div>
@@ -1777,7 +1773,6 @@ function prodDoMes(mesKey, nome){
   const diasProd = new Set((D.daily||[]).filter(d=>d.mes===mesKey).map(d=>d.data)).size;
   return { p, dUteis, capacidade, mo, fatMec, fatTotal, diasMec, diasProd, prod: capacidade? mo/capacidade : 0, desejada: capacidade*p.desejadoPct };
 }
-let chartIndivEquipeInst;
 function renderIndividualProdutividade(mesKey, ativos){
   const x = prodDoMes(mesKey, indivMecFiltro);
   const mObj = D.monthly.find(m=>m.mesKey===mesKey);
@@ -1803,21 +1798,6 @@ function renderIndividualProdutividade(mesKey, ativos){
     '<div class="meta-row"><label>Horas vendidas (M.O. ÷ VH)</label><span>'+horasVendidas.toFixed(1)+' h de '+(x.dUteis*x.p.horasDia)+' h</span></div>'+
     '<div class="meta-row"><label>M.O. por dia trabalhado</label><span>'+fmtR(x.diasMec? x.mo/x.diasMec : 0)+'</span></div>';
 
-  // equipe: produtividade de todos os mecânicos ativos do mês (fundo cinza = capacidade)
-  const eq = ativos.map(m=>({nome:m.nome, v: x.capacidade? m.mo/x.capacidade*100:0})).sort((a,b)=>b.v-a.v);
-  if(chartIndivEquipeInst) chartIndivEquipeInst.destroy();
-  chartIndivEquipeInst = new Chart(document.getElementById('chartIndivEquipe'), {
-    type:'bar',
-    data:{ labels: eq.map(e=>e.nome), datasets:[
-      {type:'bar', label:'Capacidade', data: eq.map(()=>100), backgroundColor:'#E3DFD1', borderRadius:6, barPercentage:.7, categoryPercentage:.8, grouped:false, datalabels:{display:false}},
-      {type:'bar', label:'Produtividade', data: eq.map(e=>e.v), backgroundColor: eq.map(e=>e.nome===indivMecFiltro?'#F2B705':(e.v>=des?'#1F8A4C':'#1A1A1A')), borderRadius:6, barPercentage:.7, categoryPercentage:.8, grouped:false,
-        datalabels:{display:true, anchor:'end', align:'end', color:'#1A1A1A', font:{size:11,weight:'700'}, formatter:v=>v.toFixed(1)+'%'}}
-    ]},
-    options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, layout:{padding:{right:46}},
-      plugins:{legend:{display:false}, tooltip:{callbacks:{label:(c)=>c.dataset.label+': '+c.parsed.x.toFixed(1)+'%'}}},
-      scales:{ x:{min:0, max:100, grid:{color:'#eee'}, ticks:{callback:v=>v+'%', font:{size:10.5}}}, y:{grid:{display:false}, ticks:{font:{size:12}}} } }
-  });
-  document.getElementById('indEquipeNote').textContent = 'M.O. ÷ capacidade máxima · desejada '+des.toFixed(0)+'%';
 }
 
 function renderIndividual(){
