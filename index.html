@@ -207,6 +207,8 @@ body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--text);min-he
 
 /* KPI */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:1.6rem;}
+.kpi-grid.kpi-c3{grid-template-columns:repeat(3,1fr);}
+.kpi-grid.kpi-c2{grid-template-columns:repeat(2,1fr);}
 .kpi-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.3rem 1.5rem;position:relative;overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow .15s,transform .15s;}
 .kpi-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px);}
 .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--border);}
@@ -387,6 +389,7 @@ table.diario-table tfoot td{font-weight:700;color:var(--black);border-top:2px so
 /* TABLET (icon-only sidebar) */
 @media(max-width:1100px) and (min-width:641px){
   .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .kpi-grid.kpi-c3{grid-template-columns:repeat(3,1fr);}
   .charts-row{grid-template-columns:1fr;}
   .mec-wrap{grid-template-columns:1fr;}
   .caixa-kpi-row{grid-template-columns:1fr;}
@@ -429,6 +432,8 @@ table.diario-table tfoot td{font-weight:700;color:var(--black);border-top:2px so
   .topbar-title{font-size:23px;}
   .topbar-sub{font-size:11px;}
   .kpi-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .kpi-grid.kpi-c3{grid-template-columns:1fr;}
+  .kpi-grid.kpi-c2{grid-template-columns:repeat(2,1fr);}
   .kpi-card{padding:1rem 1rem;}
   .kpi-value{font-size:21px;}
   .charts-row{grid-template-columns:1fr;gap:10px;}
@@ -856,7 +861,7 @@ table.diario-table tfoot td{font-weight:700;color:var(--black);border-top:2px so
   </div>
   <div class="filter-pills" id="filtroMecIndividual" style="margin-bottom:1.4rem;"></div>
 
-  <div class="kpi-grid">
+  <div class="kpi-grid kpi-c3">
     <div class="kpi-card accent">
       <div class="kpi-label">Meta de Produção (pessoal)</div>
       <div class="kpi-value" id="ind-meta">—</div>
@@ -867,11 +872,6 @@ table.diario-table tfoot td{font-weight:700;color:var(--black);border-top:2px so
       <div class="kpi-value" id="ind-atual">—</div>
       <div class="kpi-sub" id="ind-pctmeta">—</div>
     </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Ranking por Produção Média</div>
-      <div class="kpi-value" id="ind-rank">—</div>
-      <div class="kpi-sub">M.O. ÷ qtd. OS · informativo, não afeta a bonificação</div>
-    </div>
     <div class="kpi-card" id="ind-premio-card">
       <div class="kpi-label">Bonificação (Prêmio Total)</div>
       <div class="kpi-value" id="ind-premio">—</div>
@@ -880,37 +880,16 @@ table.diario-table tfoot td{font-weight:700;color:var(--black);border-top:2px so
   </div>
 
   <div class="card-title" style="margin:.2rem 0 .8rem;font-size:13px;">Produtividade <span class="note" id="indProdNote">aba PRODUTIVIDADE da planilha</span></div>
-  <div class="kpi-grid">
+  <div class="kpi-grid kpi-c2">
     <div class="kpi-card accent">
       <div class="kpi-label">Produtividade</div>
       <div class="kpi-value" id="ind-prod">—</div>
       <div class="kpi-sub" id="ind-prod-sub">—</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Capacidade Máxima (M.O.)</div>
-      <div class="kpi-value" id="ind-cap">—</div>
-      <div class="kpi-sub" id="ind-cap-sub">—</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Faturamento Total do Mecânico</div>
-      <div class="kpi-value" id="ind-fat">—</div>
-      <div class="kpi-sub" id="ind-fat-sub">—</div>
-    </div>
-    <div class="kpi-card">
       <div class="kpi-label">Dias Produtivos</div>
       <div class="kpi-value" id="ind-dias">—</div>
       <div class="kpi-sub" id="ind-dias-sub">—</div>
-    </div>
-  </div>
-
-  <div class="charts-row">
-    <div class="card">
-      <div class="card-title">Parâmetros de produtividade <span class="note">editáveis · salvos neste navegador</span></div>
-      <div class="meta-row"><label>VH médio (R$/hora)</label><span><input type="number" id="ip-vh" min="1" step="1" style="width:90px;text-align:right" oninput="onProdParamInput()"></span></div>
-      <div class="meta-row"><label>Horas por dia</label><span><input type="number" id="ip-horas" min="1" max="24" step="0.5" style="width:90px;text-align:right" oninput="onProdParamInput()"></span></div>
-      <div class="meta-row"><label>Produtividade desejada (%)</label><span><input type="number" id="ip-des" min="1" max="100" step="1" style="width:90px;text-align:right" oninput="onProdParamInput()"></span></div>
-      <div class="meta-row"><label style="font-size:10px;color:var(--muted);">Fórmula da planilha</label><span style="font-size:10.5px;color:var(--muted);text-align:right;">Capacidade = dias úteis × horas/dia × VH · Produtividade = M.O. ÷ capacidade</span></div>
-      <div id="ind-prod-extra"></div>
     </div>
   </div>
 
@@ -922,6 +901,17 @@ table.diario-table tfoot td{font-weight:700;color:var(--black);border-top:2px so
     <div class="card">
       <div class="card-title">Composição da bonificação <span class="note">3 faixas fixas sobre o valor absoluto de M.O. do mês</span></div>
       <div id="indivBreakdown"></div>
+    </div>
+  </div>
+
+  <div class="charts-row" style="grid-template-columns:1fr;">
+    <div class="card">
+      <div class="card-title">Parâmetros de produtividade <span class="note">editáveis · salvos neste navegador</span></div>
+      <div class="meta-row"><label>VH médio (R$/hora)</label><span><input type="number" id="ip-vh" min="1" step="1" style="width:90px;text-align:right" oninput="onProdParamInput()"></span></div>
+      <div class="meta-row"><label>Horas por dia</label><span><input type="number" id="ip-horas" min="1" max="24" step="0.5" style="width:90px;text-align:right" oninput="onProdParamInput()"></span></div>
+      <div class="meta-row"><label>Produtividade desejada (%)</label><span><input type="number" id="ip-des" min="1" max="100" step="1" style="width:90px;text-align:right" oninput="onProdParamInput()"></span></div>
+      <div class="meta-row"><label style="font-size:10px;color:var(--muted);">Fórmula da planilha</label><span style="font-size:10.5px;color:var(--muted);text-align:right;">Capacidade = dias úteis × horas/dia × VH · Produtividade = M.O. ÷ capacidade</span></div>
+      <div id="ind-prod-extra"></div>
     </div>
   </div>
 </div>
@@ -1788,10 +1778,6 @@ function renderIndividualProdutividade(mesKey, ativos){
     sub += ' · projeção do mês: '+(x.capacidade? (proj/x.capacidade*100).toFixed(1):'0')+'% ('+fmtR(proj)+')';
   }
   document.getElementById('ind-prod-sub').textContent = sub;
-  document.getElementById('ind-cap').textContent = fmtR(x.capacidade);
-  document.getElementById('ind-cap-sub').textContent = x.dUteis+' dias úteis × '+x.p.horasDia+'h × VH R$ '+x.p.vhMedio+' · desejada '+fmtR(x.desejada);
-  document.getElementById('ind-fat').textContent = fmtR(x.fatMec);
-  document.getElementById('ind-fat-sub').textContent = (x.fatTotal? (x.fatMec/x.fatTotal*100).toFixed(1):'0.0')+'% de participação no faturamento do mês ('+fmtR(x.fatTotal)+')';
   document.getElementById('ind-dias').textContent = x.diasMec+' de '+x.diasProd;
   document.getElementById('ind-dias-sub').textContent = 'dias com entrega do mecânico / dias produtivos da oficina'+(ate?' (até dia '+ate+')':'');
   const horasVendidas = x.p.vhMedio? x.mo/x.p.vhMedio : 0;
@@ -1807,7 +1793,6 @@ function renderIndividual(){
   document.getElementById('indivSub').textContent = indivMesFiltro + '/2026 — bonificação por faixa de produção (mão de obra)';
   if(!indivMecFiltro || !ativos.length){
     document.getElementById('ind-meta').textContent='—'; document.getElementById('ind-atual').textContent='—';
-    document.getElementById('ind-rank').textContent='—'; document.getElementById('ind-premio').textContent='—';
     document.getElementById('indivBreakdown').innerHTML = '<div class="kpi-sub">Sem mecânico identificado neste mês.</div>';
     return;
   }
@@ -1830,7 +1815,6 @@ function renderIndividual(){
   document.getElementById('ind-atual').textContent = fmtR(atual.mo);
   document.getElementById('ind-pctmeta').textContent = (pctMeta*100).toFixed(1)+'% da meta pessoal';
   document.getElementById('ind-pctmeta').className = 'kpi-sub ' + (pctMeta>=1?'pos':'');
-  document.getElementById('ind-rank').textContent = rank+'º de '+ativos.length;
   document.getElementById('ind-premio').textContent = fmtR2(premioTotal);
   document.getElementById('ind-premio-sub').textContent = faixaInfo ? 'Faixa '+faixaInfo.faixa+' · '+(faixaInfo.pct*100).toFixed(1)+'% sobre a mão de obra' : 'abaixo de R$ 17.000,00 — sem bonificação';
   document.getElementById('ind-premio-card').classList.toggle('accent', premioTotal>0);
